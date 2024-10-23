@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.human.dao.IOrderDao">
+<insert id="insert_session">
+insert into orders (
+	order_id, session_id, order_name, order_day, order_address, order_phoneNumber, order_password
+) VALUES (
+	#{order_id}, #{session_id}, #{order_name}, #{order_day}, #{order_address}, #{order_phoneNumber}, #{order_password}
+)
+</insert>
+<insert id="insert_user">
+insert into orders (
+	order_id, user_id, order_name, order_day, order_address, order_email, order_phoneNumber
+) VALUES (
+    #{order_id}, #{user_id}, #{order_name}, #{order_day}, #{order_address}, #{order_email}, #{order_phoneNumber}
+)
+</insert>
+
+<select id="select_session" resultType="com.human.dto.OrderDto" >
+select * from orders where order_id=#{order_id} and session_id=#{session_id}
+</select>
+<select id="select_session_pw" resultType="com.human.dto.OrderDto" >
+select * from orders where order_id=#{order_id, jdbcType=VARCHAR} and order_phoneNumber=#{order_phoneNumber, jdbcType=VARCHAR} and order_password=#{order_password, jdbcType=VARCHAR}
+</select>
+<select id="select_user" resultType="com.human.dto.OrderDto">
+select * from orders where order_id=#{order_id, jdbcType=VARCHAR} and user_id=#{user_id}
+</select>
+
+<select id="selectAll" resultType="com.human.dto.OrderDto" >
+select * from orders ORDER BY session_id ASC, user_id ASC
+</select>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+

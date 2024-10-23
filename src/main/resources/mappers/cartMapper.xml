@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.human.dao.ICartDao">
+<insert id="insert_session">
+insert into cart (
+	cart_id, session_id, product_code, quantity
+) VALUES (
+    #{cart_id}, #{session_id, jdbcType=VARCHAR}, #{product_code}, #{quantity}
+)
+</insert>
+<insert id="insert_user">
+insert into cart (
+	cart_id, user_id, product_code, quantity
+) VALUES (
+    #{cart_id}, #{user_id, jdbcType=VARCHAR}, #{product_code}, #{quantity}
+)
+</insert>
+
+<select id="selectAll_session" resultType="com.human.dto.CartDto">
+select * from cart where session_id = #{session_id} order by product_code
+</select>
+<select id="selectAll_user" resultType="com.human.dto.CartDto">
+select * from cart where user_id = #{user_id} order by product_code
+</select>
+
+<update id="update_session">
+update cart 
+set quantity = quantity + #{quantity}
+where session_id = #{session_id} 
+	and product_code = #{product_code}
+</update>
+<update id="update_user">
+update cart 
+set quantity = quantity + #{quantity} 
+where user_id = #{user_id} 
+	and product_code = #{product_code}
+</update>
+
+
+<!-- 장바구니에 같은 상품이 있나 조회하는 쿼리들 -->
+<select id="checkSessionCart" resultType="int">
+select count(*)
+from cart
+where session_id = #{session_id} and product_code = #{product_code}
+</select>
+<select id="checkUserCart" resultType="int">
+select count(*)
+from cart
+where user_id = #{user_id} and product_code = #{product_code}
+</select>
+
+<select id="selectAll_CartShop_session" resultType="com.human.dto.CartShopDto">
+select c.cart_id, c.session_id, c.product_code, c.quantity, s.name, s.price
+from cart c
+inner join shops s
+on c.product_code = s.code
+where c.session_id = #{session_id}
+</select> 
+<select id="selectAll_CartShop_user" resultType="com.human.dto.CartShopDto">
+select c.cart_id, c.user_id, c.product_code, c.quantity, s.name, s.price
+from cart c
+inner join shops s
+on c.product_code = s.code
+where c.user_id = #{user_id}
+</select> 
+<!-- 
+select cart_id, session_id, user_id, product_code, quantity, name, price
+ from Cart,Shop 
+ where product_code = Shop.code 
+ -->
+ 
+<delete id="all_delete_session_id">
+delete from cart where session_id = #{session_id}
+</delete>
+<delete id="all_delete_user_id">
+delete from cart where user_id = #{user_id}
+</delete>
+
+<delete id="delete_session">
+delete from cart where session_id = #{session_id} and product_code = #{product_code}
+</delete>
+<delete id="delete_user">
+delete from cart where user_id = #{user_id} and product_code = #{product_code}
+</delete>
+
+<select id="selectAll" resultType="com.human.dto.CartDto">
+select * from cart ORDER BY session_id ASC, user_id ASC
+</select>
+
+<select id="selectAll_CartShop" resultType="com.human.dto.CartShopDto">
+select c.cart_id, c.session_id, c.user_id, c.product_code, c.quantity, s.name, s.price
+from cart c
+inner join shops s
+on c.product_code = s.code
+</select> 
+
+</mapper>
+
+
+
+
+
+
+
+
+

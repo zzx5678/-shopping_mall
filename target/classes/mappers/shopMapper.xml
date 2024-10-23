@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.human.dao.IShopDao">
+<insert id="insert">
+insert into shops(
+	img_address, code, name, price, product_Text, manufacturer, classify, stock, quality
+) values(
+	#{img_address}, #{code}, #{name}, #{price}, #{product_Text}, #{manufacturer}, #{classify}, #{stock}, #{quality} 
+)
+</insert>
+<select id="select" resultType="com.human.dto.ShopDto">
+select * from shops where code=#{code}
+</select>
+
+<select id="selectAll" resultType="com.human.dto.ShopDto">
+select * from shops order by code
+</select>
+
+<delete id="delete">
+delete from shops where code=#{code}
+</delete>
+<update id="update">
+update shops set img_address=#{img_address}, code=#{code}, name=#{name}, price=#{price}, product_Text=#{product_Text}, manufacturer=#{manufacturer}, classify=#{classify}, stock=#{stock}, quality=#{quality}
+ where code=#{code}
+</update>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
